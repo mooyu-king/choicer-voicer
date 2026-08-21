@@ -1,3 +1,7 @@
+# Answer/search crawler: the public site is available for discovery and citation.
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: *
 Allow: /
 

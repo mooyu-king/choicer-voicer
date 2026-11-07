@@ -32,69 +32,33 @@ Adult visitors can open **[Temple of the Jackal](https://choicervoicer.site/temp
 
 ![Temple of the Jackal rotating puzzle chamber](temple-of-the-jackal-cover.webp)
 
-## Website features
 
-- A centered, responsive 16:9 game player with a delayed launch cover.
-- Share and fullscreen controls directly below the iframe.
-- A compact **Play More** shelf linking The Choicer Voicer and Temple of the Jackal without sending visitors to another website.
-- A scored Persona reading with three live traits, on-device history, native sharing, and downloadable PNG cards. Reading history is stored only in the visitor's browser and is not uploaded.
-- An opt-in game event bridge for real 0–6 round scores, match totals, end events, and temporary playback or WAV download of the latest take.
-- Pack 工作台支持本地波形分析，以及由用户主动触发的 Whisper 服务端转写；Dub 预览、社交画幅、派对轮次和麦克风测试仍以浏览器本地处理为主。
-- Eight independent SEO guide routes with direct calls to the relevant tools.
-- Two embedded gameplay videos, illustrated session guidance, FAQ content, and browser troubleshooting.
-- Complete About Us, Privacy Policy, Contact, and Terms of Service pages.
-- Canonical metadata, Open Graph data, a sitemap, robots rules, and structured game/FAQ data.
-- Responsive advertising that keeps the game clear: a desktop native block or mobile 320×50 banner in the content flow, plus a deferred Social Bar after visitors leave the game area. Popunder advertising is not used.
+## Make a voice session your own
 
-The site is an unofficial fan-made portal. Game names, characters, artwork, code, and related assets remain the property of their respective owners.
+The studio is built around the pleasure of hearing a familiar line become something unexpected. A convincing performance does not have to sound exactly like the original speaker. Try changing one element at a time: a slower opening, an exaggerated pause, a whisper followed by a confident finish, or a completely different emotional interpretation. Keeping the words recognizable while changing the delivery gives other listeners something concrete to react to.
 
-## Technology
+Start with a short session rather than a large collection of unfamiliar clips. Listen carefully before speaking and leave a moment of silence at the beginning and end of your take. A quiet room helps you hear the difference between your intended delivery and what the microphone actually captures. If several people are playing together, agree on a comfortable speaking distance and let each performer finish before the group comments.
 
-The website uses Next.js 15, React 19, TypeScript, and CSS. Next.js uses static export, producing an **out/** directory suitable for GitHub-based deployment and static hosting. Images are exported without a server-side optimizer, and routes use trailing slashes.
+## Explore packs with a purpose
 
-Pack 页面默认使用浏览器端多语言 Whisper ONNX 模型。用户明确启动后，浏览器从 Hugging Face 下载并缓存模型，优先使用 WebGPU，失败时回退到 WASM/CPU；所选媒体、时间戳和转写正文不上传服务器。`server/transcribe-worker/` 保留为未来云端订阅方案的接口，但当前前端不会调用；云端入口只记录不含自由文本或媒体信息的需求事件。
+The pack directory gives visitors another way to discover material for a session. Browse a few entries, inspect the available descriptions and previews, and choose a theme that your group recognizes. A preview is useful context, not a promise that every clip will suit every audience. Consider language, tone and subject matter before introducing unfamiliar material to younger listeners or a mixed group.
 
-Anonymous traffic measurement loads once from **https://data.1back.link/js/app.js** with the canonical domain **choicervoicer.site**. The separately hosted iframe game uses **s.templeofthejackal.com** as its analytics domain, allowing the game path's referral report to show which parent websites link to or embed it when browsers provide a referrer.
+A downloaded pack and a finished performance are different things. Follow the relevant pack page and the game's own import prompts instead of assuming that every file can be opened directly. Keep the original file available until you know that your chosen material works in your intended session. Where a preview is unavailable, do not treat its absence as evidence that the pack is empty or suitable for everyone.
 
-## Local development
+## Practice without pressure
 
-    npm install
-    npm run dev
+For a useful practice routine, repeat the same prompt with three different intentions. First read it naturally, then give it a dramatic interpretation, and finally try a deliberately understated version. Compare the results by listening rather than by focusing only on a score. Clear timing, consistent volume and an audible ending often make a performance easier to understand.
 
-Quality checks:
+When playing socially, a simple rotation keeps the session welcoming. Give everyone a turn, allow a pass on uncomfortable material, and keep feedback about the performance rather than the person. Headphones are particularly helpful when replaying a take near a live microphone. Avoid recording other people without their agreement, and do not include personal information in a line you intend to share.
 
-    npm run lint
-    npm run typecheck
-    npm run build
+## Browser permissions and privacy
 
-## Preserve the deployment repository
+The microphone is a browser permission, not something that a README can grant. If a prompt does not appear or recording seems silent, check the browser's site permission and the selected input device. An operating-system mute switch or another application using the microphone may also affect the experience. Do not repeatedly reload while a take you want to keep is still on screen.
 
-The generated **out/** directory is designed to be its own Git repository. Use:
+Read the current tool description before choosing media for transcription or another optional workflow. Different tools can have different processing requirements, and an older description should not override the notice next to the action you are about to take. Keep copies of anything important outside temporary browser playback. Clearing site data can remove locally retained preferences or history.
 
-    npm run build-preserve-git
+## Choose your next activity
 
-On the first run, the command creates **out/README.md**, initializes **out/.git**, switches to the **main** branch, and configures:
+Use the studio for a quick voice challenge, return to a familiar prompt for practice, or explore the directory when you want a new theme. Related game pages are separate experiences with their own controls and audience expectations. In particular, an adult-content notice is a meaningful boundary rather than a decoration: check it before opening or sharing that page.
 
-    https://github.com/mooyu-king/choicer-voicer.git
-
-On later runs, it temporarily saves **out/.git** and **out/README.md**, clears stale **.next** and generated output, performs a fresh static export, and restores both entries unchanged. The command does not stage, commit, push, deploy, or alter production traffic.
-
-After reviewing the generated files, publish explicitly from inside **out/** using the repository owner's normal Git workflow.
-
-## Main structure
-
-    src/app/                         App Router pages, metadata, policies, and styles
-    src/components/GameStudio.tsx   Game launch, real score/recording events, sharing, fullscreen, and Play More shelf
-    src/components/EndingDiscussion.tsx  Persona statistics and PNG share-card generation
-    src/lib/site.ts                 Domain, navigation, and shared site data
-    public/                         Logo, screenshots, robots.txt, and sitemap.xml
-    scripts/build-preserve-git.mjs  Safe static-export builder
-    out/                            Generated site and independent deployment repository
-
-## 隐私
-
-麦克风权限由浏览器控制，并在跨域游戏 iframe 中使用。评分回合的录音只用于当前页面的临时播放和下载，不会自动上传。Pack 工作台的波形分析同样留在本机；只有用户明确点击 `Transcribe with Whisper` 后，所选媒体才会经独立 Worker 发送给 OpenAI 生成文字与分段时间戳。比赛摘要和 Persona 计数可能保存在浏览器本地存储中，直至访客清除站点数据。详情参见正式的 **[Privacy Policy](https://choicervoicer.site/privacy/)**。
-
-## Visit the studio
-
-Ready to take the microphone? **[Play The Choicer Voicer online free at choicervoicer.site](https://choicervoicer.site/)**.
+This is an independent fan destination. Names and artwork identify the games and materials being discussed; they do not imply that the site owns those characters or speaks for their creators. The website's About, Privacy, Contact and Terms pages provide further context for visitors.
